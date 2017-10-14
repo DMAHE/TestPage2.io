@@ -1,0 +1,639 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style type="text/css">
+<!--
+
+.bodycopy {  font-family: Helvetica,Arial; font-size: 9pt; color: #000000; line-height: 120%;}
+ 
+.smallcopy {  font-family: Helvetica,Arial; font-size: 8pt; color: #000000; line-height: 120%;}
+ 
+ 
+ .brithead {  font-family: Times,Roman,Serif; font-size: 42pt; line-height: 100%;  color: #FFFFFF; text-decoration: none;}
+ 
+ .sansub {  font-family: Helvetica,Arial; font-size: 10.5pt; line-height: 120%;  color: #999999; text-decoration: none;}
+
+.news {  font-family: Times,Roman; font-size: 12pt; text-decoration: none;}
+ 
+.caption {  font-family: Arial; font-size: 8.5pt; color: #000000;  text-decoration: none;}
+.factoidcaption {  font-family: Arial; font-size: 8.5pt; color: #666600;  text-decoration: none;}
+.footertext {  font-family: Arial; font-size: 7pt; letter-spacing:0.1em }
+
+.headline { font-family: Helvetica,Arial; font-size: 26pt; color: #88691e; line-height: 120%;}
+
+.subhead { font-family: Helvetica,Arial; font-size: 12pt; color: #88691e; line-height: 120%;}
+.subhead2 { font-family: Helvetica,Arial; font-size: 12pt; font-weight:bold; color: #870d04; line-height: 120%;}
+
+.navbar {  font-family: Arial; font-size: 8pt; color: #FFFFFF; text-decoration: none; }
+
+.insidenav {  font-family: Helvetica; font-size: 8pt; color: #000000; text-decoration: none; }
+.mainnav {  font-family: Helvetica,Arial; font-size: 11pt; color: #FFFFFF; text-decoration: none; }
+.subnav {  font-family: Helvetica,Arial; font-size: 10pt; color: #FFFFFF; text-decoration: none; }
+
+.navbar2 {  font-family: Arial; font-size: 7.5pt; color: #FFFFFF; line-height: 160%; text-decoration: none; }
+
+a:link    {text-decoration: none;  color: #ffffff;}
+a:active  {text-decoration: none;  color: #ffffff;}
+a:visited {text-decoration: none;   color: #ffffff;}
+a:hover   {color:#ff0000; font-style:none; text-decoration:none; text-transform:none;  } 
+ 
+a.special:link    {text-decoration: none; border-bottom: 1px dotted; color: #0000cc}
+a.special:active  {text-decoration: none; border-bottom: 1px dotted; color: #0000cc;}
+a.special:visited {text-decoration: none; border-bottom: 1px dotted; color: #0000cc; }
+a.special:hover   {color:#003399; font-weight:bold; font-style:none; text-decoration:none; text-transform:none; } 
+
+ 
+ //-->
+</style>
+
+
+
+
+<script src="./British History_files/ca-pub-6120450523731115.js.download"></script><script type="text/javascript">
+      
+/***********************************************
+* Ultimate Fade-In Slideshow (v1.51):  Dynamic Drive (http://www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit http://www.dynamicdrive.com/ for this script and 100s more.
+***********************************************/
+ 
+var fadeimages=new Array()
+//SET IMAGE PATHS. Extend or contract array as needed
+fadeimages[0]=["banners/barrymoser-banner.jpg", "calendar_events.html", ""] //image with link syntax 
+fadeimages[1]=["banners/studiotour-banner.jpg", "wyeth-gallery.html", ""] //image with link syntax 
+fadeimages[2]=["banners/farmtour-banner.jpg", "kuerner.html", ""] //image with link syntax  
+ 
+ 
+ 
+var fadebgcolor="white"
+
+////NO need to edit beyond here/////////////
+ 
+var fadearray=new Array() //array to cache fadeshow instances
+var fadeclear=new Array() //array to cache corresponding clearinterval pointers
+ 
+var dom=(document.getElementById) //modern dom browsers
+var iebrowser=document.all
+ 
+function fadeshow(theimages, fadewidth, fadeheight, borderwidth, delay, pause, displayorder){
+this.pausecheck=pause
+this.mouseovercheck=0
+this.delay=delay
+this.degree=50 //initial opacity degree (10%)
+this.curimageindex=0
+this.nextimageindex=1
+fadearray[fadearray.length]=this
+this.slideshowid=fadearray.length-1
+this.canvasbase="canvas"+this.slideshowid
+this.curcanvas=this.canvasbase+"_0"
+if (typeof displayorder!="undefined")
+theimages.sort(function() {return 0.5 - Math.random();}) //thanks to Mike (aka Mwinter) :)
+this.theimages=theimages
+this.imageborder=parseInt(borderwidth)
+this.postimages=new Array() //preload images
+for (p=0;p<theimages.length;p++){
+this.postimages[p]=new Image()
+this.postimages[p].src=theimages[p][0]
+}
+ 
+var fadewidth=fadewidth+this.imageborder*2
+var fadeheight=fadeheight+this.imageborder*2
+ 
+if (iebrowser&&dom||dom) //if IE5+ or modern browsers (ie: Firefox)
+document.write('<div id="master'+this.slideshowid+'" style="position:relative;width:'+fadewidth+'px;height:'+fadeheight+'px;overflow:hidden;"><div id="'+this.canvasbase+'_0" style="position:absolute;width:'+fadewidth+'px;height:'+fadeheight+'px;top:0;left:0;filter:progid:DXImageTransform.Microsoft.alpha(opacity=10);opacity:0.1;-moz-opacity:0.1;-khtml-opacity:0.1;background-color:'+fadebgcolor+'"></div><div id="'+this.canvasbase+'_1" style="position:absolute;width:'+fadewidth+'px;height:'+fadeheight+'px;top:0;left:0;filter:progid:DXImageTransform.Microsoft.alpha(opacity=10);opacity:0.1;-moz-opacity:0.1;-khtml-opacity:0.1;background-color:'+fadebgcolor+'"></div></div>')
+else
+document.write('<div><img name="defaultslide'+this.slideshowid+'" src="'+this.postimages[0].src+'"></div>')
+ 
+if (iebrowser&&dom||dom) //if IE5+ or modern browsers such as Firefox
+this.startit()
+else{
+this.curimageindex++
+setInterval("fadearray["+this.slideshowid+"].rotateimage()", this.delay)
+}
+}
+
+function fadepic(obj){
+if (obj.degree<100){
+obj.degree+=10
+if (obj.tempobj.filters&&obj.tempobj.filters[0]){
+if (typeof obj.tempobj.filters[0].opacity=="number") //if IE6+
+obj.tempobj.filters[0].opacity=obj.degree
+else //else if IE5.5-
+obj.tempobj.style.filter="alpha(opacity="+obj.degree+")"
+}
+else if (obj.tempobj.style.MozOpacity)
+obj.tempobj.style.MozOpacity=obj.degree/101
+else if (obj.tempobj.style.KhtmlOpacity)
+obj.tempobj.style.KhtmlOpacity=obj.degree/100
+else if (obj.tempobj.style.opacity&&!obj.tempobj.filters)
+obj.tempobj.style.opacity=obj.degree/101
+}
+else{
+clearInterval(fadeclear[obj.slideshowid])
+obj.nextcanvas=(obj.curcanvas==obj.canvasbase+"_0")? obj.canvasbase+"_0" : obj.canvasbase+"_1"
+obj.tempobj=iebrowser? iebrowser[obj.nextcanvas] : document.getElementById(obj.nextcanvas)
+obj.populateslide(obj.tempobj, obj.nextimageindex)
+obj.nextimageindex=(obj.nextimageindex<obj.postimages.length-1)? obj.nextimageindex+1 : 0
+setTimeout("fadearray["+obj.slideshowid+"].rotateimage()", obj.delay)
+}
+}
+ 
+fadeshow.prototype.populateslide=function(picobj, picindex){
+var slideHTML=""
+if (this.theimages[picindex][1]!="") //if associated link exists for image
+slideHTML='<a href="'+this.theimages[picindex][1]+'" target="'+this.theimages[picindex][2]+'">'
+slideHTML+='<img src="'+this.postimages[picindex].src+'" border="'+this.imageborder+'px">'
+if (this.theimages[picindex][1]!="") //if associated link exists for image
+slideHTML+='</a>'
+picobj.innerHTML=slideHTML
+}
+ 
+ 
+fadeshow.prototype.rotateimage=function(){
+if (this.pausecheck==1) //if pause onMouseover enabled, cache object
+var cacheobj=this
+if (this.mouseovercheck==1)
+setTimeout(function(){cacheobj.rotateimage()}, 100)
+else if (iebrowser&&dom||dom){
+this.resetit()
+var crossobj=this.tempobj=iebrowser? iebrowser[this.curcanvas] : document.getElementById(this.curcanvas)
+crossobj.style.zIndex++
+fadeclear[this.slideshowid]=setInterval("fadepic(fadearray["+this.slideshowid+"])",50)
+this.curcanvas=(this.curcanvas==this.canvasbase+"_0")? this.canvasbase+"_1" : this.canvasbase+"_0"
+}
+else{
+var ns4imgobj=document.images['defaultslide'+this.slideshowid]
+ns4imgobj.src=this.postimages[this.curimageindex].src
+}
+this.curimageindex=(this.curimageindex<this.postimages.length-1)? this.curimageindex+1 : 0
+}
+ 
+fadeshow.prototype.resetit=function(){
+this.degree=10
+var crossobj=iebrowser? iebrowser[this.curcanvas] : document.getElementById(this.curcanvas)
+if (crossobj.filters&&crossobj.filters[0]){
+if (typeof crossobj.filters[0].opacity=="number") //if IE6+
+crossobj.filters(0).opacity=this.degree
+else //else if IE5.5-
+crossobj.style.filter="alpha(opacity="+this.degree+")"
+}
+else if (crossobj.style.MozOpacity)
+crossobj.style.MozOpacity=this.degree/101
+else if (crossobj.style.KhtmlOpacity)
+crossobj.style.KhtmlOpacity=this.degree/100
+else if (crossobj.style.opacity&&!crossobj.filters)
+crossobj.style.opacity=this.degree/101
+}
+ 
+ 
+fadeshow.prototype.startit=function(){
+var crossobj=iebrowser? iebrowser[this.curcanvas] : document.getElementById(this.curcanvas)
+this.populateslide(crossobj, this.curimageindex)
+if (this.pausecheck==1){ //IF SLIDESHOW SHOULD PAUSE ONMOUSEOVER
+var cacheobj=this
+var crossobjcontainer=iebrowser? iebrowser["master"+this.slideshowid] : document.getElementById("master"+this.slideshowid)
+crossobjcontainer.onmouseover=function(){cacheobj.mouseovercheck=1}
+crossobjcontainer.onmouseout=function(){cacheobj.mouseovercheck=0}
+}
+this.rotateimage()
+}
+
+</script>
+
+<style type="text/css">
+
+#dropmenudiv{
+position:absolute;
+border:1px solid ffffff;
+border-bottom-width: 0;
+font:normal 8pt Arial;
+line-height:14pt;
+z-index:100;
+}
+
+#dropmenudiv a{
+width: 100%;
+display: block;
+text-indent: 2px;
+border-bottom: 1px solid ffffff;
+padding: 1px 0;
+text-decoration: none;
+font-weight: normal;
+}
+
+#dropmenudiv a:hover{ /*hover background color*/
+background-color: ffffff;
+font-weight: normal;
+}
+.style9 {font-style: italic}
+</style>
+
+<script type="text/javascript">
+
+/***********************************************
+* AnyLink Drop Down Menu-  Dynamic Drive (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit http://www.dynamicdrive.com/ for full source code
+***********************************************/
+//Contents for menu 1
+var menu1=new Array()
+menu1[0]='<a href="giving.html">Annual Giving</a>'
+menu1[1]='<a href=" http://www.legacy.vg/brandywineconservancy">Planned Giving</a>'
+menu1[2]='<a href="volunteer.html">Volunteer</a>'  
+ 
+
+//Contents for menu 2, and so on
+var menu2=new Array()
+menu2[0]='<a href="mapdir.html">Hours, Admission &amp; Directions</a>'
+menu2[1]='<a href="espanol.html">Informaci&#243;n en Espanol</a>'
+menu2[2]='<a href="calendar_events.html">Museum Tours &amp; Events</a>'
+menu2[3]='<a href="ncstudio.html">N.C. Wyeth House &amp; Studio Tour</a>'
+menu2[4]='<a href="kuerner.html">Kuerner Farm Tour</a>'
+menu2[5]='<a href="tour.html">Group Tours</a>'
+menu2[6]='<a href="audiotours.html">Audio Tours</a>'
+menu2[7]='<a href="facilitiesuse.html">Facility Use</a>'
+menu2[8]='<a href="restaurant.html">Restaurant</a>'
+menu2[9]='<a href="shop.html">Museum Shop</a>'
+ 
+//Contents for menu 3, and so on
+var menu3=new Array()
+menu3[0]='<a href="../celtic/wales/">Tour Wales Homepage</a>'
+menu3[1]='<a href="../tours/wales/">The Six Regions of Wales</a>'
+menu3[2]='<a href="../tours/welshcastles/">Touring Welsh Castles</a>'
+menu3[3]='<a href="../celtic/wales/sacred/">Sacred Places</a>'
+menu3[4]='<a href="../wales/7wonders/wonderintro.html">Tour the Castles of Wales</a>'
+menu3[5]='<a href="../wales/7wonders/wonderintro.html">Seven Wonders of Wales</a>'
+menu3[6]='<a href="../wales/culture1.html">Cultural Traditions of Wales</a>'
+menu3[7]='<a href="../wales/whist.html">History of Wales</a>'
+menu3[8]='<a href="../celtic/wales/facts/">Facts about Wales</a>'
+menu3[9]='<a href="../celtic/wales/eighthwonder/wonder1.html">The Eighth Wonder</a>'
+
+//Contents for menu 4, and so on
+var menu4=new Array()
+menu4[0]='<a href="../tours">Virtual Tours Home</a>'
+menu4[1]='<a href="magical">Magical History Tour</a>'
+menu4[2]='<a href="../tours/winchester/city.html">Explore Winchester</a>'
+menu4[3]='<a href="../tours/bmrbgal/">British Museum Romano-British Gallery</a>'
+menu4[4]='<a href="../tours/westcountry">West Country</a>'
+menu4[5]='<a href="../tours/westpubs">West Country Pubs</a>'
+menu4[6]='<a href="../tours/ssxchurch">Sussex Churches</a>'
+menu4[7]='<a href="../tours/york">Ancient York</a>'
+menu4[8]='<a href="../tours/coquetdale">Travel to Coquetdale</a>'
+menu4[9]='<a href="../tours/berks">Berkshire Towns</a>'
+menu4[10]='<a href="../tours/lincs">Country Houses around S.W. Lincolnshire</a>'
+menu4[11]='<a href="../tours/glstour1.html">Tour Gloucester</a>'
+menu4[12]='<a href="../tours/hadrianswall">Tour Hadrians Wall</a>'
+menu4[13]='<a href="../tours/batnorthumb">Northumberland Battlefields</a>'
+menu4[14]='<a href="../tours/wales">Six Regions of Wales</a>'
+menu4[15]='<a href="../tours/welshcastles/">Touring Welsh Castle</a>'
+menu4[16]='<a href="britcastles/">Touring British Castle</a>'
+menu4[17]='<a href="../tours/yorksmon">Monasteries - Yorkshire Dales & Moors</a>'
+menu4[18]='<a href="../tours/fdrake">In Search of Sir Francis Drake</a>'
+menu4[19]='<a href="../tours/fdrake/part3.html">Sir Francis Drakes Home </a>'
+menu4[20]='<a href="../tours/rhood/rhnotts.html">Robin Hoods Nottinghamshire</a>'
+menu4[21]='<a href="../tours/rhood/rhyorks.html" >Robin Hoods Yorkshire</a>' 
+menu4[22]='<a href="../tours/dome">Tour the Millennium Dome</a>' 
+ 
+//Contents for menu 5, and so on
+var menu5=new Array()
+menu5[0]='<a href="UKfastsearch.html">Hotel Reservations</a>'
+menu5[1]='<a href="special-offers.html">Hotel Specials</a>'
+menu5[2]='<a href="http://www.taxireservations.co.uk/SelectSourcePoint.action?lang=en&usercode=offtl1&showhome=no">Airport Transfers</a>'
+menu5[3]='<a href="../PriorityTravel/travel_resources.html">Resources Quick Links</a>' 
+menu5[4]='<a href="theater-packages.html">Theatre Breaks</a>'  
+menu5[5]='<a href="Market/index.html">Travel Market</a>' 
+ 
+  
+ //Contents for menu 6, and so on
+var menu6=new Array()
+menu6[0]='<a href="ukhotels.html">Hotels & B&Bs</a>'
+menu6[1]='<a href="cottages.html">Self Catering Cottages</a>'
+menu6[2]='<a href="studenttravel.html">Student Travel</a>'
+menu6[3]='<a href="touristboards.html">Tourist Boards</a>'
+menu6[4]='<a href="guides.html">UK County Guides</a>'
+menu6[5]='<a href="city/index.html">City Pages</a>'
+menu6[6]='<a href="golfing.html">Golfing in the UK</a>'
+menu6[7]='<a href="canal_boating.html">Boating Vacations</a>'
+menu6[8]='<a href="a_z_museums.html">UK Museums</a>'
+menu6[9]='<a href="natlparks.html">UK National Parks</a>'
+menu6[10]='<a href=festivals_list.html">UK Festivals</a>'
+menu6[11]='<a href="../educat/uniframe.html">Colleges & Universities</a>'
+menu6[12]='<a href="pubs.html">Pub Guides</a>'
+ 
+ 
+ 
+ //Contents for menu 7, and so on
+var menu7=new Array()
+menu7[0]='<a href="../awards">Awards</a>'
+menu7[1]='<a href="../privacy.html">Privacy Statement</a>'
+  menu7[2]='<a href="../advertising">Advertise on Britannia</a>'
+  menu7[3]='<a href="../faq.html">FAQs</a>'
+  menu7[4]='<a href="../staff.html">Contributors</a>'
+  menu7[5]='<a href="../contact.html">Contact Us</a>'
+    
+ 
+var menuwidth='190px' //default menu width
+var menubgcolor='9a1106'  //menu bgcolor
+var disappeardelay=300  //menu disappear speed onMouseout (in miliseconds)
+var hidemenu_onclick="yes" //hide menu when user clicks within menu?
+
+/////No further editting needed
+
+var ie4=document.all
+var ns6=document.getElementById&&!document.all
+
+if (ie4||ns6)
+document.write('<div id="dropmenudiv" style="visibility:hidden;width:'+menuwidth+';background-color:'+menubgcolor+'" onMouseover="clearhidemenu()" onMouseout="dynamichide(event)"></div>')
+
+function getposOffset(what, offsettype){
+var totaloffset=(offsettype=="left")? what.offsetLeft : what.offsetTop;
+var parentEl=what.offsetParent;
+while (parentEl!=null){
+totaloffset=(offsettype=="left")? totaloffset+parentEl.offsetLeft : totaloffset+parentEl.offsetTop;
+parentEl=parentEl.offsetParent;
+}
+return totaloffset;
+}
+
+
+function showhide(obj, e, visible, hidden, menuwidth){
+if (ie4||ns6)
+dropmenuobj.style.left=dropmenuobj.style.top="-500px"
+if (menuwidth!=""){
+dropmenuobj.widthobj=dropmenuobj.style
+dropmenuobj.widthobj.width=menuwidth
+}
+if (e.type=="click" && obj.visibility==hidden || e.type=="mouseover")
+obj.visibility=visible
+else if (e.type=="click")
+obj.visibility=hidden
+}
+
+function iecompattest(){
+return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+}
+
+function clearbrowseredge(obj, whichedge){
+var edgeoffset=-10
+if (whichedge=="rightedge"){
+var windowedge=ie4 && !window.opera? iecompattest().scrollLeft+iecompattest().clientWidth-15 : window.pageXOffset+window.innerWidth-15
+dropmenuobj.contentmeasure=dropmenuobj.offsetWidth
+if (windowedge-dropmenuobj.x < dropmenuobj.contentmeasure)
+edgeoffset=dropmenuobj.contentmeasure-obj.offsetWidth
+}
+else{
+var topedge=ie4 && !window.opera? iecompattest().scrollTop : window.pageYOffset
+var windowedge=ie4 && !window.opera? iecompattest().scrollTop+iecompattest().clientHeight-15 : window.pageYOffset+window.innerHeight-18
+dropmenuobj.contentmeasure=dropmenuobj.offsetHeight
+if (windowedge-dropmenuobj.y < dropmenuobj.contentmeasure){ //move up?
+edgeoffset=dropmenuobj.contentmeasure+obj.offsetHeight
+if ((dropmenuobj.y-topedge)<dropmenuobj.contentmeasure) //up no good either?
+edgeoffset=dropmenuobj.y+obj.offsetHeight-topedge
+}
+}
+return edgeoffset
+}
+
+function populatemenu(what){
+if (ie4||ns6)
+dropmenuobj.innerHTML=what.join("")
+}
+
+
+function dropdownmenu(obj, e, menucontents, menuwidth){
+if (window.event) event.cancelBubble=true
+else if (e.stopPropagation) e.stopPropagation()
+clearhidemenu()
+dropmenuobj=document.getElementById? document.getElementById("dropmenudiv") : dropmenudiv
+populatemenu(menucontents)
+
+if (ie4||ns6){
+showhide(dropmenuobj.style, e, "visible", "hidden", menuwidth)
+dropmenuobj.x=getposOffset(obj, "left")
+dropmenuobj.y=getposOffset(obj, "top")
+dropmenuobj.style.left=dropmenuobj.x-clearbrowseredge(obj, "rightedge")+"px"
+dropmenuobj.style.top=dropmenuobj.y-clearbrowseredge(obj, "bottomedge")+obj.offsetHeight+"px"
+}
+
+return clickreturnvalue()
+}
+
+function clickreturnvalue(){
+if (ie4||ns6) return false
+else return true
+}
+
+function contains_ns6(a, b) {
+while (b.parentNode)
+if ((b = b.parentNode) == a)
+return true;
+return false;
+}
+
+function dynamichide(e){
+if (ie4&&!dropmenuobj.contains(e.toElement))
+delayhidemenu()
+else if (ns6&&e.currentTarget!= e.relatedTarget&& !contains_ns6(e.currentTarget, e.relatedTarget))
+delayhidemenu()
+}
+
+function hidemenu(e){
+if (typeof dropmenuobj!="undefined"){
+if (ie4||ns6)
+dropmenuobj.style.visibility="hidden"
+}
+}
+
+function delayhidemenu(){
+if (ie4||ns6)
+delayhide=setTimeout("hidemenu()",disappeardelay)
+}
+
+function clearhidemenu(){
+if (typeof delayhide!="undefined")
+clearTimeout(delayhide)
+}
+
+if (hidemenu_onclick=="yes")
+document.onclick=hidemenu
+
+</script><link rel="preload" href="./British History_files/integrator.js.download" as="script"><script type="text/javascript" src="./British History_files/integrator.js.download"></script><link rel="preload" href="./British History_files/integrator.js(1).download" as="script"><script type="text/javascript" src="./British History_files/integrator.js(1).download"></script><link rel="prefetch" href="https://securepubads.g.doubleclick.net/static/3p_cookie.html"></head><body topmargin="10" marginheight="10" marginwidth="10" bgcolor="#ffffff"><div id="dropmenudiv" style="visibility:hidden;width:190px;background-color:9a1106" onmouseover="clearhidemenu()" onmouseout="dynamichide(event)"></div>
+
+<title>British History</title>
+
+<meta name="keywords" content="Tamils History,Monarchs of TamilNadu,Tamil Nadu,Timelines,South India,Indian Kingdoms,Indian Kings">
+<meta name="description" content="The internet&#39;s most comprehensive information resource for the times, places, events and people of Tamils history.">
+<meta name="rating" content="General">
+<meta name="revisit-after" content="15 days">
+<meta name="VW96.objecttype" content="Document">
+<meta name="ROBOTS" content="ALL">
+<meta p-equiv="Content-type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-language" content="en-US">
+<meta http-equiv="Reply-to" content=" ">
+
+ 
+<table cellpadding="0" cellspacing="0" border="0" width="1080"><tbody><tr><td width="43" bgcolor="#121212">&nbsp;</td><td bgcolor="#121212"><img src="./British History_files/boudica.jpg" width="85" height="83" hspace="2" vspace="10" border="0"></td><td bgcolor="#121212" class="brithead" align="left" width="600">TAMILNADU<div class="sansub">Great Southern State of India</div></td><td bgcolor="#121212" align="right" width="440"><br><br><table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="center" class="navbar" valign="middle">SEARCH&nbsp;&nbsp;</td><td valign="middle"><form method="get" action="http://www.google.com/custom" target="google_window"> <input type="hidden" name="domains" value="www.britannia.com">
+<input type="text" name="q" size="20" maxlength="255" value="">
+</form></td><td nowrap="nowrap" valign="middle" align="center" class="navbar"><input type="radio" name="sitesearch" value="">
+Web&nbsp;&nbsp;</td><td class="navbar" valign="middle"> <input type="radio" name="sitesearch" value="www.britannia.com" checked="checked">
+Britannia&nbsp;&nbsp;&nbsp;&nbsp;</td><td>
+<input type="submit" name="sa" value="Google Search">
+<input type="hidden" name="client" value="pub-6120450523731115">
+<input type="hidden" name="forid" value="1">
+<input type="hidden" name="ie" value="ISO-8859-1">
+<input type="hidden" name="oe" value="ISO-8859-1">
+<input type="hidden" name="cof" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:336699;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;FORID:1;">
+<input type="hidden" name="hl" value="en">
+</td></tr></tbody></table></td><td width="23" bgcolor="#121212">&nbsp;</td></tr></tbody></table>
+<table cellpadding="5" cellspacing="0" border="0" width="1080" height="42"><tbody><tr><td width="43" bgcolor="#333333">&nbsp;</td><td valign="middle" bgcolor="#333333" class="mainnav" align="center"><a href="http://www.britannia.com/index.html">HOME</a></td><td valign="middle" bgcolor="#88691e" align="center" class="mainnav"><a href="http://www.britannia.com/history">BRITISH HISTORY</a></td><td valign="middle" align="center" bgcolor="#333333" class="mainnav"><a href="http://www.britannia.com/history/h12.html">KING ARTHUR</a></td><td valign="middle" align="center" bgcolor="#333333" class="mainnav"><a href="http://www.britannia.com/history/h6.html">MONARCHS</a></td><td valign="middle" align="center" bgcolor="#333333" class="mainnav"><a href="http://www.britannia.com/travel">TRAVEL</a></td><td valign="middle" align="center" bgcolor="#333333" class="mainnav"><a href="http://www.britannia.com/bios">BIOGRAPHIES</a></td><td valign="middle" align="center" bgcolor="#333333" class="mainnav"><a href="http://www.britannia.com/panorama">PANORAMA</a></td><td valign="middle" align="center" bgcolor="#333333" class="mainnav"><a href="http://www.britannia.com/blogs">BLOGS</a></td><td valign="middle" align="center" bgcolor="#333333" class="mainnav"><a href="http://www.britannia.com/shop">SHOP</a></td><td valign="middle" bgcolor="#333333" width="120" class="mainnav">&nbsp;</td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="1080"><tbody><tr><td width="23" bgcolor="#333333">&nbsp;</td><td bgcolor="#88691e"><center>
+<table cellpadding="5" cellspacing="3" border="0" height="42"><tbody><tr><td bgcolor="#88691e"></td><td valign="middle" bgcolor="#88691e" class="subnav" align="center"><a href="http://www.britannia.com/history/h12.html">KING ARTHUR</a></td><td valign="middle" bgcolor="#88691e" class="subnav" align="center"><a href="http://www.britannia.com/history/h6.html">MONARCHS OF BRITAIN</a></td><td valign="middle" bgcolor="#88691e" align="center" class="subnav"><a href="http://www.britannia.com/wonder/wonder.html">EARTH MYSTERIES</a></td><td valign="middle" bgcolor="#88691e" class="subnav"><a href="http://www.britannia.com/history/narintrohist.html">HISTORY OF ENGLAND</a></td><td valign="middle" align="center" bgcolor="#88691e" class="subnav"></td><td width="230" bgcolor="#88691e">&nbsp;</td></tr></tbody></table> </center></td><td width="23" bgcolor="#333333">&nbsp;</td></tr></tbody></table>
+
+<table cellpadding="0" cellspacing="0" border="0" width="1080"><tbody><tr><td width="23" bgcolor="#e0dede">&nbsp;</td><td bgcolor="#ffffff"><center>
+<table cellpadding="5" cellspacing="0" border="0" width="146"><tbody><tr><td bgcolor="#ffffff" valign="top"><br><br><br> 
+<table cellpadding="3" cellspacing="0" border="0" width="136"><tbody><tr><td bgcolor="#ffffff" class="insidenav" valign="top"><b>History Directories</b></td> </tr>
+<tr><td bgcolor="#ffffff" class="insidenav"><a href="http://www.britannia.com/history/h6.html" class="special">British Monarchs</a></td> </tr>
+<tr><td bgcolor="#ffffff" class="insidenav"><a href="http://www.britannia.com/history/timelines.html" class="special">Timelines</a></td> </tr>
+ 
+<tr><td bgcolor="#ffffff" class="insidenav"><a href="http://www.britannia.com/history/docs/index.html" class="special">Sources &amp; Texts</a></td> </tr>
+<tr><td bgcolor="#ffffff" class="insidenav"><a href="http://www.britannia.com/bios/index.html" class="special">Biographies</a></td> </tr>
+<tr><td bgcolor="#ffffff" class="insidenav"><a href="http://www.britannia.com/church/index.html" class="special">Church History</a></td> </tr>
+ 
+ 
+ </tbody></table>
+
+
+
+
+
+</td>
+<td valign="top" bgcolor="#ffffff" width="544">
+<table cellpadding="10" cellspacing="0" border="0" width="544">
+<tbody><tr><td valign="top" class="bodycopy">
+
+
+<div class="headline">BRITISH HISTORY</div>
+<div class="subhead">The internet's most comprehensive information resource for the times, places, events and people of British history.</div><br> 
+
+
+<img src="./British History_files/arrow.gif" width="8" height="9"> <font color="990000"><b>New </b></font> <a href="http://www.britannia.com/history/monarchs_burials.html" class="special"><b>Where Are They Now?</b></a> - Burial places of Britain's rulers<br>
+
+<img src="./British History_files/arrow.gif" width="8" height="9"> <font color="990000"><b>New </b></font>  <a href="http://www.britannia.com/history/templar.html" class="special"><b> The Knights Templar</b> </a> - the mysterious ending of a strange organization.<br>
+					
+<img src="./British History_files/arrow.gif" width="8" height="9"> <font color="990000"><b>New </b></font>  <a href="http://www.britannia.com/history/stgeorge.html" class="special"><b>St. George</b> </a> - Life and legend of England's patron saint<br>
+					
+<img src="./British History_files/arrow.gif" width="8" height="9"> 
+<font color="990000"><b>New</b></font> <b>Lives of the Queens of England</b>: - A series of articles by Heidi Murphy<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - <a href="http://www.britannia.com/history/biographies/catherine_valois.html" class="special">Catherine of Valois</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - <a href="http://www.britannia.com/history/biographies/catherine_braganza.html" class="special">Catherine of Braganza</a><br><br><br>
+
+<hr width="510" align="left" color="e0e0e0">
+
+
+<img src="./British History_files/richard_1.jpg" alt="" width="166" height="530" align="right" vspace="10">
+
+<div class="subhead"><b>Major Content Sections</b></div>
+
+<a href="http://www.britannia.com/history/h12.html" class="special"><b>King Arthur</b></a> - The greatest legend of all!<br>
+
+ <a href="http://www.britannia.com/history/h6.html" class="special"><b>Monarchs of Britain</b></a> - Bios, lists, more<br>
+
+ <a href="http://www.britannia.com/church/index.html" class="special"><b>Church History</b></a> - The dark age to the Reformation.<br>
+
+ <a href="http://www.britannia.com/bios/index.html" class="special"><b>Biographies</b></a> - The lives of famous Britons<br><br>
+
+
+<div class="subhead"><b>Narrative Histories</b></div>
+
+<a href="http://www.britannia.com/history/narintrohist.html" class="special"><b>England</b> </a> - by Peter Williams, Ph.D.<br>
+						
+<a href="http://www.britannia.com/wales/whist.html" class="special"><b>Wales</b> </a> - by Peter Williams, Ph.D.<br>
+						
+<a href="http://www.britannia.com/celtic/scotland/history_scotland.html" class="special"><b>Scotland</b> </a> - by Peter Williams, Ph.D.<br>
+						
+<a href="http://www.britannia.com/history/londonhistory/index.html" class="special"><b>London</b> </a> - by David Nash Ford<br>
+						
+ <br>
+
+
+<div class="subhead"><b>Time Periods</b></div>
+
+<a href="http://www.britannia.com/history/h20.html" class="special"><b>Prehistoric Britain</b></a> - Index of period resources<br>
+
+<a href="http://www.britannia.com/history/h30.html" class="special"><b>Roman Britain</b></a> - Index of period resources<br>
+
+<a href="http://www.britannia.com/history/h50.html" class="special"><b>Anglo Saxon Britain</b></a> - Index of period resources<br>
+
+<a href="http://www.britannia.com/history/h60.html" class="special"><b>Medieval Britain</b></a> - Index of period resources<br>
+
+<a href="http://www.britannia.com/history/h70.html" class="special"><b>Reformation &amp; Restoration</b></a> - Index of period resources<br>
+
+<a href="http://www.britannia.com/history/h80.html" class="special"><b>Age of Empire</b></a> - Index of period resources<br>
+
+<a href="http://www.britannia.com/history/h90.html" class="special"><b>Modern Britain</b></a> - Index of period resources<br>
+
+<a href="http://www.britannia.com/history/h100.html" class="special"><b>Myth, Legend &amp; Folklore</b></a> - Index of period resources<br> <br>
+
+
+<div class="subhead"><b>Other Resources</b></div>
+
+ <a href="http://www.britannia.com/history/docs/index.html" class="special"><b>Documents</b> </a> - Original sources &amp; texts of history<br>
+	
+ <a href="http://www.britannia.com/history/timelines.html" class="special"><b>Timelines</b> </a> - Histories in chronological order<br>
+
+ <a href="http://www.britannia.com/history/histmaps.html" class="special"><b>Historical Maps</b></a> - Aids to visualizing history.<br>
+
+ <br>
+			
+
+
+<div class="subhead"><b>Important Arthurian Sources &amp; Texts</b></div>
+	
+  <a href="http://www.britannia.com/history/docs/gildas.html" class="special"><b> De Excidio Britanniae </b></a> - c.540, Gildas.<br>
+
+ <a href="http://www.britannia.com/history/docs/nennius.html" class="special"><b> Historia Brittonum </b></a> - c.830, Nennius.<br>
+
+ <a href="http://www.britannia.com/history/docs/annales.html" class="special"><b> Annales Cambriae </b></a> - c. 970, Annals of Wales.<br><br>
+	
+
+<div class="subhead"><b>Featured Pages:</b></div>
+
+<a href="http://www.britannia.com/history/rulebrit.html" class="special"><b>Rule Britannia!</b></a> - The story / words to the song<br>
+	
+	<a href="http://www.britannia.com/history/kaboom.html" class="special"><b>The Gunpowder Plot</b></a> - A plot to blow up Parliament<br>
+	
+	<a href="http://www.britannia.com/history/g-fawkes.html" class="special"><b>Guy Fawkes</b></a> - Bio of a Gunpowder Plotter<br>
+	
+	<a href="http://www.britannia.com/history/h7.html" class="special"><b>Stonehenge</b></a> - The full story<br>
+			
+	<a href="http://www.britannia.com/history/resource/britons.html" class="special"><b>Legendary Kings of Britain</b></a> - Geoffrey of Monmouth<br>
+	
+	<a href="http://www.britannia.com/history/magna2.html" class="special"><b>Magna Carta</b></a> - King John's finest hour<br>
+	
+	<a href="http://www.britannia.com/history/docs/asintro2.html" class="special"><b>Anglo Saxon Chronicle</b></a> - Victor's-eye view of history<br>
+	
+	<a href="http://www.britannia.com/travel/magical/index.html" class="special"><b>Magical History Tour</b></a> - A joyride through history<br>
+	
+	<a href="http://www.britannia.com/history/c-house.html" class="special"><b>Country Houses</b></a> - Guide to England's grand estates<br>
+	
+	<a href="http://www.britannia.com/history/coroner1.html" class="special"><b>The Medieval Coroner</b></a> - by Bernard Knight, CBE<br>
+	
+	<a href="http://www.britannia.com/history/euro/index2.html" class="special"><b>Europe in Retrospect</b></a> - by Raymond F. Betts, Ph.D.<br>
+	
+	<a href="http://www.britannia.com/history/h17.html" class="special"><b>Geoffrey Ashe</b></a> - An exclusive interview<br>
+	
+	<a href="http://www.britannia.com/history/ebk/index.html" class="special"><b>Early British Kingdoms</b></a> - Britain in the 5th-7th C.<br>
+	
+	<a href="http://www.britannia.com/history/david1.html" class="special"><b>The English Castle</b></a> - A survey by David Dawson<br>
+	
+	
+<b> . . . and much more!</b>
+
+<br><br><br><br></td> </tr>
+
+ 
+ 
+<tr><td valign="top" bgcolor="#ffffff" colspan="2" class="bodycopy">Copyright ©2016  Britannia.com, LLC &nbsp;&nbsp;<a href="mailto:publish@britannia.com" class="special">Questions? Comments!</a>  <br><br> </td> </tr></tbody></table></td> 
+
+  </center></td><td width="23" bgcolor="#e0dede">&nbsp;</td> </tr></tbody></table>
+<table cellpadding="0" cellspacing="0" border="0" width="1080" height="25"><tbody><tr><td bgcolor="#e0dede">&nbsp;</td></tr></tbody></table></center>
+
+
+ 
+</body></html>
